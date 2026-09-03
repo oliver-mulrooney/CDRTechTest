@@ -1,5 +1,6 @@
 using CDR.Data;
 using CDR.Service.Extensions;
+using CDR.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,15 +12,22 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddCdrService();
-
 builder.Services.AddDbContext<CDRContext>(options =>
 {
     var serviceOptions = builder.Configuration["CDRConnectionString"];
+
+    if (string.IsNullOrEmpty(serviceOptions))
+    {
+        throw new Exception("CDRConnectionString was not found");
+    }
+
     options
-    //.UseLazyLoadingProxies()
+    .UseLazyLoadingProxies()
     .UseMySQL(serviceOptions!);
 });
+
+builder.Services.AddCdrService(); 
+builder.Services.AddCdrData();
 
 var app = builder.Build();
 

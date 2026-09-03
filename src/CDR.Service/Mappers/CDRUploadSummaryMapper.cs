@@ -8,7 +8,7 @@ public class CDRUploadSummaryMapper : ICDRUploadSummaryMapper
     {
         return new CDRUploadSummaryResponse
         {
-            TotalRecordsUploaded = CDRs.Count,
+            TotalRecordsUploaded = CDRs!.Count,
             IsSuccessful = IsSuccessful,
             ErrorMessage = ErrorMessage
         };

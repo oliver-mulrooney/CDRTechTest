@@ -12,6 +12,7 @@ public static class CDRServiceCollectionExtensions
         //Register Interfaces for DI
         services.AddScoped<ICDRService, CDRService>();
         services.AddScoped<ICDRUploadSummaryMapper, CDRUploadSummaryMapper>();
+        services.AddScoped<ICDRCsvRecordsToEntitiesMapper, CDRCsvRecordsToEntitiesMapper>();
 
         return services;
     }

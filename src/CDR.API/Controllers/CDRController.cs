@@ -5,6 +5,8 @@ using System.Globalization;
 
 namespace CDR.API.Controllers;
 
+[ApiController]
+[Route("CDR")]
 public class CDRController : ControllerBase
 {
     private readonly ILogger<CDRController> _logger;

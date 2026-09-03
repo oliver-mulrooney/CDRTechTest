@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 namespace CDR.Data.Enums;
 public enum CurrencyEnum
 { 
-    GPB
+    GBP
 }
