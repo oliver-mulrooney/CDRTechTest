@@ -1,4 +1,5 @@
-﻿using CDR.Data.Queries.Interfaces;
+﻿using CDR.Data.Enums;
+using CDR.Data.Queries.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,11 +17,12 @@ public class GetMostExpensiveCDRsByDateRangeAndCallerIdQuery : IGetMostExpensive
         _cdrContext = cdrContext;
     }
 
-    public async Task<List<Entities.CDR>> Execute(DateTime startDate, DateTime endDate, string callerId, int amount)
+    public async Task<List<Entities.CDR>> Execute(DateTime startDate, DateTime endDate, string callerId, int amount, CallTypeEnum? callType)
     {
         return await _cdrContext.CDRs.Where(x => x.CallDate >= startDate  
         && x.CallDate <= endDate
-        && x.CallerId == callerId)
+        && x.CallerId == callerId
+        && (x.CallType == callType || callType == null))
         .OrderByDescending(x => x.Cost)
         .Take(amount)
         .ToListAsync();

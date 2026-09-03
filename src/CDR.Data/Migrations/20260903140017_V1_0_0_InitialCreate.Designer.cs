@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CDR.Data.Migrations
 {
     [DbContext(typeof(CDRContext))]
-    [Migration("20260903104318_V1_0_0_InitialCreate")]
+    [Migration("20260903140017_V1_0_0_InitialCreate")]
     partial class V1_0_0_InitialCreate
     {
         /// <inheritdoc />
@@ -34,12 +34,15 @@ namespace CDR.Data.Migrations
                     b.Property<DateTime>("CallDate")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<int>("CallType")
+                        .HasColumnType("int");
+
                     b.Property<string>("CallerId")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<decimal>("Cost")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Cost")
+                        .HasColumnType("double");
 
                     b.Property<int>("Currency")
                         .HasColumnType("int");

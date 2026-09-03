@@ -20,7 +20,7 @@ public class CDRCsvRecord
     public int Duration { get; set; }
 
     [Name("cost")]
-    public decimal Cost { get; set; }
+    public double Cost { get; set; }
 
     [Name("reference")]
     public required string Reference { get; set; }

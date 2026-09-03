@@ -26,9 +26,10 @@ namespace CDR.Data.Migrations
                     CallDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     EndTime = table.Column<TimeSpan>(type: "time(6)", nullable: false),
                     Duration = table.Column<int>(type: "int", nullable: false),
-                    Cost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Cost = table.Column<double>(type: "double", nullable: false),
                     Reference = table.Column<string>(type: "longtext", nullable: false),
-                    Currency = table.Column<int>(type: "int", nullable: false)
+                    Currency = table.Column<int>(type: "int", nullable: false),
+                    CallType = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

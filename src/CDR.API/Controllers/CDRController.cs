@@ -1,4 +1,5 @@
-﻿using CDR.Model.Requests;
+﻿using CDR.Data.Enums;
+using CDR.Model.Requests;
 using CDR.Model.Responses;
 using CDR.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -37,11 +38,11 @@ public class CDRController : ControllerBase
     }
 
     [HttpGet("Report")]
-    public async Task<IActionResult> CdrReport([FromBody] CDRDateFilterRequest dateFilterRequest)
+    public async Task<IActionResult> CdrReport([FromBody] CDRDateFilterRequest dateFilterRequest, [FromQuery] CallTypeEnum? callType)
     {
         try
         {
-            var result = await _cdrService.GetCdrReport(dateFilterRequest.StartDate, dateFilterRequest.EndDate);
+            var result = await _cdrService.GetCdrReport(dateFilterRequest.StartDate, dateFilterRequest.EndDate, callType);
 
             return result.CallAmount > 0 ? Ok(result) : NotFound(result);
         }
@@ -52,13 +53,13 @@ public class CDRController : ControllerBase
     }
 
     [HttpGet("CallerId/{callerId}")]
-    public async Task<IActionResult> GetCdrByReference([FromBody] CDRDateFilterRequest dateFilterRequest, string callerId)
+    public async Task<IActionResult> GetCdrByReference([FromBody] CDRDateFilterRequest dateFilterRequest, string callerId, [FromQuery] CallTypeEnum? callType)
     {
         try
         {
-            var result = await _cdrService.GetCdrsByCallerIdAndDate(callerId, dateFilterRequest.StartDate, dateFilterRequest.EndDate);
+            var result = await _cdrService.GetCdrsByCallerIdAndDate(callerId, dateFilterRequest.StartDate, dateFilterRequest.EndDate, callType);
 
-            return result != null ? Ok(result) : NotFound();
+            return result != null ? Ok(result) : NotFound(result);
         }
         catch (ArgumentException ex)
         {
@@ -67,13 +68,13 @@ public class CDRController : ControllerBase
     }
 
     [HttpGet("ExpensiveCallsReport/{callerId}/{amountOfCalls}")]
-    public async Task<IActionResult> GetExpensiveCallsReport([FromBody] CDRDateFilterRequest dateFilterRequest, string callerId, int amountOfCalls)
+    public async Task<IActionResult> GetExpensiveCallsReport([FromBody] CDRDateFilterRequest dateFilterRequest, string callerId, int amountOfCalls, [FromQuery] CallTypeEnum? callType)
     {
         try
         {
-            var result = await _cdrService.GetMostExpensiveCallsByDateRangeAndCallerId(callerId, dateFilterRequest.StartDate, dateFilterRequest.EndDate, amountOfCalls);
+            var result = await _cdrService.GetMostExpensiveCallsByDateRangeAndCallerId(callerId, dateFilterRequest.StartDate, dateFilterRequest.EndDate, amountOfCalls, callType);
 
-            return result != null ? Ok(result) : NotFound();
+            return result.Any() ? Ok(result) : NotFound(result);
         }
         catch (ArgumentException ex)
         {

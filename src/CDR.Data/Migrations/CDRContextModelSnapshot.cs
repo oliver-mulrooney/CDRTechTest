@@ -31,12 +31,15 @@ namespace CDR.Data.Migrations
                     b.Property<DateTime>("CallDate")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<int>("CallType")
+                        .HasColumnType("int");
+
                     b.Property<string>("CallerId")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<decimal>("Cost")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Cost")
+                        .HasColumnType("double");
 
                     b.Property<int>("Currency")
                         .HasColumnType("int");

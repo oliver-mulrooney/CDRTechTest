@@ -17,6 +17,7 @@ public class CDRCsvRecordsToEntitiesMapper : ICDRCsvRecordsToEntitiesMapper
                 Currency = x.Currency,
                 EndTime = x.EndTime,
                 Reference = x.Reference,
+                CallType = Data.Enums.CallTypeEnum.Domestic
             }
         ).ToList();
     }

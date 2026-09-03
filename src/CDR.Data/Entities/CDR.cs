@@ -15,9 +15,11 @@ public class CDR
 
     public int Duration { get; set; }
 
-    public decimal Cost { get; set; }
+    public double Cost { get; set; }
 
     public required string Reference { get; set; }
 
     public CurrencyEnum Currency { get; set; }
+
+    public CallTypeEnum CallType { get; set; }
 }

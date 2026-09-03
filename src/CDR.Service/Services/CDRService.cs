@@ -1,4 +1,5 @@
 ﻿using CDR.Data.Commands.Interfaces;
+using CDR.Data.Enums;
 using CDR.Data.Queries;
 using CDR.Data.Queries.Interfaces;
 using CDR.Model.Models.CSV;
@@ -9,6 +10,7 @@ using CDR.Service.Services.Interfaces;
 using CDR.Service.Validators.Interfaces;
 using CsvHelper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.VisualBasic;
 using System.Globalization;
 
 namespace CDR.Service.Services;
@@ -76,29 +78,29 @@ public class CDRService : ICDRService
         return await _getCDRByReferenceQuery.Execute(cdrReference);
     }
 
-    public async Task<CDRReportResponse> GetCdrReport(DateTime startDate, DateTime endDate)
+    public async Task<CDRReportResponse> GetCdrReport(DateTime startDate, DateTime endDate, CallTypeEnum? callType)
     {
         ValidateStartAndEndDates(startDate, endDate);
 
-        var matchingCdrs = await _getCDRsByDateRangeQuery.Execute(startDate, endDate);
+        var matchingCdrs = await _getCDRsByDateRangeQuery.Execute(startDate, endDate, callType);
 
         return _cdrReportResponseMapper.Map(matchingCdrs);
     }
 
-    public async Task<List<Data.Entities.CDR>> GetCdrsByCallerIdAndDate(string callerId, DateTime startDate, DateTime endDate)
+    public async Task<List<Data.Entities.CDR>> GetCdrsByCallerIdAndDate(string callerId, DateTime startDate, DateTime endDate, CallTypeEnum? callType)
     {
         ValidateStartAndEndDates(startDate, endDate);
 
-        var result = await _getCDRsByDateRangeAndCallerIdQuery.Execute(callerId, startDate, endDate);
+        var result = await _getCDRsByDateRangeAndCallerIdQuery.Execute(callerId, startDate, endDate, callType);
 
         return result;
     }
 
-    public async Task<List<Data.Entities.CDR>> GetMostExpensiveCallsByDateRangeAndCallerId(string callerId, DateTime startDate, DateTime endDate, int amount)
+    public async Task<List<Data.Entities.CDR>> GetMostExpensiveCallsByDateRangeAndCallerId(string callerId, DateTime startDate, DateTime endDate, int amount, CallTypeEnum? callType)
     {
         ValidateStartAndEndDates(startDate, endDate);
 
-        var result = await _getMostExpensiveCDRsByDateRangeAndCallerIdQuery.Execute(startDate, endDate, callerId, amount);
+        var result = await _getMostExpensiveCDRsByDateRangeAndCallerIdQuery.Execute(startDate, endDate, callerId, amount, callType);
 
         return result;
     }
