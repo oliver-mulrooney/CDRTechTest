@@ -11,4 +11,6 @@ public interface ICDRService
     Task<CDRReportResponse> GetCdrReport(DateTime startDate, DateTime endDate);
 
     Task<List<Data.Entities.CDR>> GetCdrsByCallerIdAndDate(string callerId, DateTime startDate, DateTime endDate);
+
+    Task<List<Data.Entities.CDR>> GetMostExpensiveCallsByDateRangeAndCallerId(string callerId, DateTime startDate, DateTime endDate, int amount);
 }

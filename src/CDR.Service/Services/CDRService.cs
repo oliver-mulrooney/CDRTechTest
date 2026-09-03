@@ -22,6 +22,7 @@ public class CDRService : ICDRService
     private readonly IGetCDRsByDateRangeQuery _getCDRsByDateRangeQuery;
     private readonly ICDRReportResponseMapper _cdrReportResponseMapper;
     private readonly IGetCDRsByDateRangeAndCallerIdQuery _getCDRsByDateRangeAndCallerIdQuery;
+    private readonly IGetMostExpensiveCDRsByDateRangeAndCallerIdQuery _getMostExpensiveCDRsByDateRangeAndCallerIdQuery;
 
 
     public CDRService(IAddCDRCommand addCDRCommand,
@@ -31,7 +32,8 @@ public class CDRService : ICDRService
         ICDRReportQueryValidator cdrReportQueryValidator,
         IGetCDRsByDateRangeQuery getCDRsByDateRangeQuery,
         ICDRReportResponseMapper cdrReportResponseMapper,
-        IGetCDRsByDateRangeAndCallerIdQuery getCDRsByDateRangeAndCallerIdQuery)
+        IGetCDRsByDateRangeAndCallerIdQuery getCDRsByDateRangeAndCallerIdQuery,
+        IGetMostExpensiveCDRsByDateRangeAndCallerIdQuery getMostExpensiveCDRsByDateRangeAndCallerIdQuery)
     {
         _addCDRCommand = addCDRCommand;
         _cdrUploadSummaryMapper = cdrUploadSummaryMapper;
@@ -41,6 +43,7 @@ public class CDRService : ICDRService
         _getCDRsByDateRangeQuery = getCDRsByDateRangeQuery;
         _cdrReportResponseMapper = cdrReportResponseMapper;
         _getCDRsByDateRangeAndCallerIdQuery = getCDRsByDateRangeAndCallerIdQuery;
+        _getMostExpensiveCDRsByDateRangeAndCallerIdQuery = getMostExpensiveCDRsByDateRangeAndCallerIdQuery;
     }
 
     public async Task<CDRUploadSummaryResponse> CreateCdrsFromCsv(IFormFile cdrFile)
@@ -87,6 +90,15 @@ public class CDRService : ICDRService
         ValidateStartAndEndDates(startDate, endDate);
 
         var result = await _getCDRsByDateRangeAndCallerIdQuery.Execute(callerId, startDate, endDate);
+
+        return result;
+    }
+
+    public async Task<List<Data.Entities.CDR>> GetMostExpensiveCallsByDateRangeAndCallerId(string callerId, DateTime startDate, DateTime endDate, int amount)
+    {
+        ValidateStartAndEndDates(startDate, endDate);
+
+        var result = await _getMostExpensiveCDRsByDateRangeAndCallerIdQuery.Execute(startDate, endDate, callerId, amount);
 
         return result;
     }

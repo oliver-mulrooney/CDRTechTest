@@ -65,4 +65,19 @@ public class CDRController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+
+    [HttpGet("ExpensiveCallsReport/{callerId}/{amountOfCalls}")]
+    public async Task<IActionResult> GetExpensiveCallsReport([FromBody] CDRDateFilterRequest dateFilterRequest, string callerId, int amountOfCalls)
+    {
+        try
+        {
+            var result = await _cdrService.GetMostExpensiveCallsByDateRangeAndCallerId(callerId, dateFilterRequest.StartDate, dateFilterRequest.EndDate, amountOfCalls);
+
+            return result != null ? Ok(result) : NotFound();
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 }

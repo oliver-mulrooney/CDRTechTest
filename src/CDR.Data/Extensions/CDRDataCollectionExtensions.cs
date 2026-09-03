@@ -14,6 +14,7 @@ public static class CDRDataCollectionExtensions
         services.AddScoped<IGetCDRByReferenceQuery, GetCDRByReferenceQuery>();
         services.AddScoped<IGetCDRsByDateRangeQuery, GetCDRsByDateRangeQuery>();
         services.AddScoped<IGetCDRsByDateRangeAndCallerIdQuery, GetCDRsByDateRangeAndCallerIdQuery>();
+        services.AddScoped<IGetMostExpensiveCDRsByDateRangeAndCallerIdQuery, GetMostExpensiveCDRsByDateRangeAndCallerIdQuery>();
 
         return services;
     }
