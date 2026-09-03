@@ -1,10 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CDR.Data.Queries.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace CDR.Data.Queries;
-internal class GetCDRByReferenceQuery
+public class GetCDRByReferenceQuery : IGetCDRByReferenceQuery
 {
+    private readonly CDRContext _cdrContext;
+
+    public GetCDRByReferenceQuery(CDRContext cdrContext)
+    {
+        _cdrContext = cdrContext;
+    }
+
+    public async Task<Entities.CDR?> Execute(string cdrReference)
+    {
+        return await _cdrContext.CDRs.FirstOrDefaultAsync(x => x.Reference == cdrReference);
+    }
 }

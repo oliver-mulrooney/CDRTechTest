@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CDR.Model.Requests;
-public class AddCDRRequest
+namespace CDR.Model.Models.ValidationResults;
+public class CDRReportValidationResult : ValidationResult
 {
 }
