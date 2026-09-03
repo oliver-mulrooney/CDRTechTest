@@ -12,6 +12,10 @@ I'm using Podman to run the required containers as a license free alternative to
 
 I've also decided to use Entity Framework DB migration to automate DB table creation. This allows me to ensure there's no mismatch between the database and my DB contexts, not to mention saving time on DB setup.
 
+I've also used Moq and AutoMoq for my unit tests to enable me to easily mock class dependencies in my unit tests.
+
+I also decided to represent the Currency and Call Type columns as Enums to ensure consistency in the database and validate input.
+
 # Assumptions Made
 
 The first assumption I was required to make was related to fact that the "call type" column was missing from the example test data provided in the tech test, but was quite often mentioned in the requirements. As such, I added some hard-coding of the "call type" when mapping from the CSV file to the Database entities. This allowed me to implement the required functionality at a very small time cost.
@@ -51,3 +55,7 @@ Given more time, I would've liked to add more unit tests to ensure high code cov
 I would've also liked to have used AutoMapper to handle some of the more 1-to-1 mapping functionality.
 
 Additionally, if the project was taken further, I would've liked to expand the CDR search functionality to accept more parameters, and making existing ones optional to create more robust and flexible search functionality .
+
+I would have also liked to have used the AutoFac package to speed up future dependency registration, as adding a new registration per newly added class can make the project balloon quite quickly.
+
+I also would have liked to make the API output a bit more user friendly when reporting on Enums, i.e. converting them to their string/name values.
