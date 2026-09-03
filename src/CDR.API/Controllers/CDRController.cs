@@ -34,7 +34,7 @@ public class CDRController : ControllerBase
     {
         var result = await _cdrService.GetCdrByReference(cdrReference);
 
-        return result != null ? Ok(result) : NotFound();
+        return result != null ? Ok(result) : NotFound(result);
     }
 
     [HttpGet("Report")]
